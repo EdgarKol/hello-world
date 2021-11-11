@@ -43,7 +43,7 @@ export default {
     title: String,
   },
   setup() {
-    const todos = ref(["Read a book", "Go for a walk", "Eat food"]);
+    const todos = ref(["Eat", "Sleep", "Code", "Repeat"]);
     const newTodo = ref("");
 
     const todosFromServer = ref([]);
