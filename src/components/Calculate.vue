@@ -48,6 +48,7 @@
 
 <script>
 import { ref } from "vue";
+
 export default {
   name: "HelloWorld",
   props: {
@@ -57,9 +58,11 @@ export default {
     const firstNumber = ref(0);
     const secondNumber = ref(0);
     let addResult = ref(0);
+
     function calculateNumbers(a, b) {
       addResult.value = a + b;
     }
+
     return {
       firstNumber,
       secondNumber,
