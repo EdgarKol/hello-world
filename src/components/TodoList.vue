@@ -6,12 +6,22 @@
 
         <ul class="list-group mb-3">
           <li
-            v-for="todo in todosFromServer"
+            v-for="(todo, _id) in todosFromServer"
             :key="todo"
             class="list-group-item"
             @click="getTodo(todo._id)"
           >
             {{ todo.title }} {{ todo.status }}
+            <button
+              @click="updateStatus"
+              class="btn btn-primary w-10"
+              display="hidden"
+            >
+              Complete
+            </button>
+            <button @click="deleteTodo(todo, _id)" key="todo, _id" class="btn btn-primary w-10">
+              Remove
+            </button>
           </li>
         </ul>
       </div>
@@ -31,7 +41,6 @@
         </button>
       </div>
     </div>
-    {{ singleTodo }}
   </div>
 </template>
 
@@ -44,12 +53,23 @@ export default {
   props: {
     title: String,
   },
+  methods: {
+deleteTodo(todo, _id){
+  this.todos.splice(todo, _id)
+}
+  },
+
+
+
+
   setup() {
     const todos = ref(["Read a book", "Go for a walk", "Eat food"]);
     const newTodo = ref("");
 
     const todosFromServer = ref([]);
     const singleTodo = ref({});
+
+    
 
     async function getTodos() {
       const result = await axios.get("/api/get-todos");
@@ -71,13 +91,14 @@ export default {
       newTodo.value = "";
       await getTodos();
     }
-
     getTodos();
 
     function addNewTodo() {
       todos.value.push(newTodo.value);
       newTodo.value = "";
     }
+    
+
 
     return {
       todos,
