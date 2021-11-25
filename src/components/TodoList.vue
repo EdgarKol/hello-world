@@ -19,7 +19,11 @@
             >
               Complete
             </button>
-            <button @click="deleteTodo(todo, _id)" key="todo, _id" class="btn btn-primary w-10">
+            <button
+              @click="deleteTodo(todo, _id)"
+              key="todo, _id"
+              class="btn btn-primary w-10"
+            >
               Remove
             </button>
           </li>
@@ -53,13 +57,6 @@ export default {
   props: {
     title: String,
   },
-  methods: {
-deleteTodo(todo, _id){
-  this.todos.splice(todo, _id)
-}
-  },
-
-
 
 
   setup() {
@@ -69,10 +66,13 @@ deleteTodo(todo, _id){
     const todosFromServer = ref([]);
     const singleTodo = ref({});
 
-    
-
     async function getTodos() {
       const result = await axios.get("/api/get-todos");
+      todosFromServer.value = result.data;
+      console.log(result.data);
+    }
+    async function deleteTodo(id){
+      const result = await axios.delete("/api/delete-todo/" + id)
       todosFromServer.value = result.data;
       console.log(result.data);
     }
@@ -97,8 +97,6 @@ deleteTodo(todo, _id){
       todos.value.push(newTodo.value);
       newTodo.value = "";
     }
-    
-
 
     return {
       todos,
@@ -108,6 +106,7 @@ deleteTodo(todo, _id){
       addTodo,
       singleTodo,
       getTodo,
+      deleteTodo
     };
   },
 };

@@ -29,17 +29,21 @@ router.post("/add-todo", async function(request, response) {
     }
     response.send("done");
 });
-router.delete('/:id', async(req, res, next) => {
-    try {
-        let toDo = await Todo.findById(req.params.id);
-        if (!toDo) {
-            return res.status(400).json({ success: false, msg: 'Task Todo not exist' });
-        }
-        toDo = await Todo.findByIdAndDelete(req.params.id);
 
-        res.status(200).json({
+
+router.delete("/:id", async(request, response, next) => {
+    try {
+        let toDo = await Todos.findById(request.body._id);
+        if (!toDo) {
+            return response
+                .status(400)
+                .json({ success: false, msg: "Task Todo not exist" });
+        }
+        toDo = await Todos.findByIdAndDelete(request.params._id);
+
+        response.status(200).json({
             success: true,
-            msg: 'Successfully Deleted task.'
+            msg: "Successfully Deleted task.",
         });
     } catch (error) {
         next(error);
