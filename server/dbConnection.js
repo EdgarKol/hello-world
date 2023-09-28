@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 // Connecting to database
 mongoose.connect(
-    "mongodb+srv://edgarkol:Joosep1234@cluster0.7pvlf.mongodb.net/TodosApp?retryWrites=true&w=majority", { useNewUrlParser: true }
+   env
 );
 const Schema = mongoose.Schema;
 
